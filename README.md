@@ -18,10 +18,10 @@ Use this cloudformation template to create the complete infrastructure to copy c
 
 ## how to use the cloudformation
 
-### execute the cloudformation template in AWS account
-### all the resources mention will be created by cloudformation template 
-### object from source bucket will be copied
+- execute the cloudformation template in AWS account
+- all the resources mention will be created by cloudformation template 
+- object from source bucket will be copied
 
 ## Debugging
 
-### Lambda logs are published in Cloudwatch logs
+- Lambda logs are published in Cloudwatch logs
