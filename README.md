@@ -10,7 +10,7 @@ Use this cloudformation template to create the complete infrastructure to copy c
 - Cloud watch log for Lambda function log tracking
 - Cloudformation custom resource to trigger the Lambda
 
-##Pre-requisites to use this cloudformation template
+## Pre-requisites to use this cloudformation template
 
 - AWS Account 
 - Source S3 bucket 
