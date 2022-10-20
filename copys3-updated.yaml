@@ -1,0 +1,143 @@
+Description:  This Template create a destination S3 bucket and copy the content from a source S3 bucket.
+
+Parameters:
+
+  InputS3Bucket:
+    Description: Enter Source S3 Bucket ARN
+    Type: String
+    Default: arn:aws:s3:::bluagetesting
+
+Resources:
+
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  RootRole:
+    Type: 'AWS::IAM::Role'
+    DependsOn: S3Bucket
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: root
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+            - Effect: Allow
+              Action:
+              - s3:GetObject
+              - s3:ListBucket
+              - logs:CreateLogGroup
+              Resource:
+              - !Ref InputS3Bucket
+              - !Join
+                - ''
+                - - !Ref InputS3Bucket
+                  - '/*'
+              - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*'
+            - Effect: Allow
+              Action:
+              - logs:CreateLogStream
+              - s3:ListBucket
+              - logs:PutLogEvents
+              Resource:
+              - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*'
+              - !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3Bucket
+            - Effect: Allow
+              Action:
+              - s3:PutObject
+              - s3:GetObject
+              Resource:
+              - !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3Bucket
+                  - '/*'
+
+  primer:
+    Type: AWS::Lambda::Function
+    DependsOn: RootRole
+    Properties:
+      Handler: index.lambda_handler
+      Runtime: python3.8
+      Role: !GetAtt RootRole.Arn
+      Timeout: 300
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import cfnresponse
+
+          s3_client=boto3.client('s3')
+
+          # lambda function to copy files from s3 to another s3
+          def lambda_handler(event, context):
+              #specify source bucket
+              print(event)
+              source_bucket_name=event['ResourceProperties']['sourcebucket']
+              destination_bucket_name=event['ResourceProperties']['destinationbucket']
+
+              response = s3_client.list_objects(Bucket=source_bucket_name)
+              i=0
+              while i < len(response['Contents']):
+                  file_name=response['Contents'][i]['Key']
+                  print(file_name)
+                  copy_object={'Bucket':source_bucket_name,'Key':file_name}
+                  s3_client.copy_object(CopySource=copy_object,Bucket=destination_bucket_name,Key=file_name)
+                  i=i+1
+
+              responseData = {}
+              responseBody = {
+                  'Status' : 'SUCCESS',
+                  'Reason' : "See the details in CloudWatch Log Stream: {}".format(context.log_stream_name),
+                  'PhysicalResourceId' : context.log_stream_name,
+                  'StackId' : event['StackId'],
+                  'RequestId' : event['RequestId'],
+                  'LogicalResourceId' : event['LogicalResourceId'],
+                  'NoEcho' : False,
+                  'Data' : responseData
+              }
+              cfnresponse.send(event, context, cfnresponse.SUCCESS, responseBody, "CustomResourcePhysicalID")
+
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    DependsOn: primer
+    Properties:
+      LogGroupName: !Join [ "", [ '/aws/lambda/', !Ref primer ] ]
+
+      RetentionInDays: 7
+
+  LambdaInvoke:
+    Type: 'Custom::LambdaCallout'
+    Properties:
+      ServiceToken: !GetAtt primer.Arn
+      sourcebucket: !Select [1, !Split [":::", !Ref InputS3Bucket]]
+      destinationbucket: !Ref S3Bucket
+
+Outputs:
+  S3BucketOutput:
+    Description: Destination S3 Bucket
+    Value: !Ref S3Bucket
+
+  IAMRoleOutput:
+    Description: IAM Role
+    Value: !Ref RootRole
+
+  LambdaInvokeOutput:
+    Description: Lambda Function
+    Value: !GetAtt LambdaInvoke.Status
