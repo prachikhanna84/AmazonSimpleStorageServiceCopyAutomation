@@ -1,6 +1,6 @@
 # S3Copy
 
-Use this cloudformation template to create the complete infrastructure to copy contents from source S3 provided by the user to target S3 bucket created in user account. 
+Use this [cloudformation](https://raw.githubusercontent.com/prachikhanna84/S3Copy/main/copys3-updated.yaml) template to create the complete infrastructure to copy contents from source S3 provided by the user to target S3 bucket created in user account. 
 
 ## Resources created by cloudformation
 
