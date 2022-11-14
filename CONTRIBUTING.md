@@ -1,4 +1,4 @@
-# We welcome you to contribute to AmazonSimpleStorageServiceCopyAutomation. To make the process as seamless as possible, we recommend you read this contribution guide.
+We welcome you to contribute to AmazonSimpleStorageServiceCopyAutomation. To make the process as seamless as possible, we recommend you read this contribution guide.
 
 # Development Workflow
 Start by forking the GitHub repository, make changes in a branch and then send a pull request. We encourage pull requests to discuss code changes. Here are the steps in details:
