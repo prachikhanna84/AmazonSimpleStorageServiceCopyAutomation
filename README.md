@@ -2,7 +2,7 @@
 
 Use this [AWS CloudFormation](https://raw.githubusercontent.com/prachikhanna84/AmazonSimpleStorageServiceCopyAutomation/main/AmazonS3Copy.yaml) template to create the complete infrastructure to copy contents from source Amazon S3 provided by the user to target Amazon S3 bucket created in user account. 
 
-![Amazon S3 Copy Automation Architecture](Amazon S3 Copy Augtomation.jpg)
+![Amazon S3 Copy Automation Architecture](https://github.com/prachikhanna84/AmazonSimpleStorageServiceCopyAutomation/blob/main/Amazon%20S3%20Copy%20Augtomation.jpg)
 
 ## Resources created by cloudformation
 
