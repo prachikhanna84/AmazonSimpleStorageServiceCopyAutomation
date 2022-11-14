@@ -1,27 +1,27 @@
-# S3Copy
+# Amazon Simple Storage Service Single account or cross account automation using AWS CloudFormation
 
-Use this [cloudformation](https://raw.githubusercontent.com/prachikhanna84/S3Copy/main/copys3-updated.yaml) template to create the complete infrastructure to copy contents from source S3 provided by the user to target S3 bucket created in user account. 
+Use this [AWS CloudFormation](https://raw.githubusercontent.com/prachikhanna84/S3Copy/main/copys3-updated.yaml) template to create the complete infrastructure to copy contents from source Amazon S3 provided by the user to target Amazon S3 bucket created in user account. 
 
 ## Resources created by cloudformation
 
-- Target S3 bucket
-- IAM role for Lambda to access/put objects in the target S3 bucket
-- Lambda function to copy the contents from source to target bucket 
-- Cloud watch log for Lambda function log tracking
-- Cloudformation custom resource to trigger the Lambda
+- Target Amazon S3 bucket
+- AWS Identity and Access Management (IAM) role for AWS Lambda to access/put objects in the target Amazon S3 bucket
+- AWS Lambda function to copy the contents from source to target bucket 
+- Amazon CloudWatch log for AWS Lambda function log tracking
+- CloudFormation custom resource to trigger the AWS Lambda
 
-## Pre-requisites to use this cloudformation template
+## Pre-requisites to use this CloudFormation template
 
 - AWS Account 
-- Source S3 bucket 
-- access to execute the cloudformation template
+- Source Amazon S3 bucket 
+- access to execute the CloudFormation template
 
-## how to use the cloudformation
+## how to use the CloudFormation
 
-- execute the cloudformation template in AWS account
-- all the resources mention will be created by cloudformation template 
+- execute the CloudFormation template in AWS account
+- all the resources mention will be created by CloudFormation template 
 - object from source bucket will be copied
 
 ## Debugging
 
-- Lambda logs are published in Cloudwatch logs
+- AWS Lambda logs are published in CloudWatch logs
