@@ -1,6 +1,6 @@
 # Amazon Simple Storage Service Single account or cross account automation using AWS CloudFormation
 
-Use this [AWS CloudFormation](https://raw.githubusercontent.com/prachikhanna84/S3Copy/main/copys3-updated.yaml) template to create the complete infrastructure to copy contents from source Amazon S3 provided by the user to target Amazon S3 bucket created in user account. 
+Use this [AWS CloudFormation](https://raw.githubusercontent.com/prachikhanna84/AmazonSimpleStorageServiceCopyAutomation/main/AmazonS3Copy.yaml) template to create the complete infrastructure to copy contents from source Amazon S3 provided by the user to target Amazon S3 bucket created in user account. 
 
 ## Resources created by cloudformation
 
