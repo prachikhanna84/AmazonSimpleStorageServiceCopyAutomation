@@ -27,3 +27,9 @@ Use this [AWS CloudFormation](https://raw.githubusercontent.com/prachikhanna84/A
 ## Debugging
 
 - AWS Lambda logs are published in CloudWatch logs
+
+## Contributing
+Contributions are more than welcome. This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct). For more information see the [Code of Conduct FAQ](https://aws.github.io/code-of-conduct-faq) or contact opensource-codeofconduct@amazon.com with any additional questions or comments.
+
+## License
+This library is licensed under the MIT-0 License. See the [LICENSE file](https://raw.githubusercontent.com/prachikhanna84/AmazonSimpleStorageServiceCopyAutomation/main/LICENSE.md).
